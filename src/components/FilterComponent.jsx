@@ -171,7 +171,7 @@ const FilterComponent = () => {
               <FormControl>
                 <RadioGroup
                   aria-labelledby='demo-radio-buttons-group-label'
-                  defaultValue='female'
+                  defaultValue='micro'
                   name='radio-buttons-group'
                 >
                   <FormControlLabel
@@ -198,7 +198,31 @@ const FilterComponent = () => {
               <ArrowDown className={styles.arrowIcon} />
               Risk Level
             </div>
-            <div className={styles.listOptions}></div>
+            <div className={styles.listOptions}>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  defaultValue='low'
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel
+                    value='low'
+                    control={<BpRadio />}
+                    label={<CustomLabel>Low Risk</CustomLabel>}
+                  />
+                  <FormControlLabel
+                    value='mid'
+                    control={<BpRadio />}
+                    label={<CustomLabel>Mid Risk</CustomLabel>}
+                  />
+                  <FormControlLabel
+                    value='high'
+                    control={<BpRadio />}
+                    label={<CustomLabel>High Risk</CustomLabel>}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
           </div>
         </div>
         <div className={styles.dualDiv}>
