@@ -1,0 +1,9 @@
+@import '../../sass/base.scss';
+.bodyContainer {
+  position: relative;
+}
+.mainContent {
+  width: calc(100% - 140px);
+  margin-left: auto;
+  padding: 20px;
+}

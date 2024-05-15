@@ -1,0 +1,92 @@
+@import '../../sass/base.scss';
+.bodyContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.alertsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 20px;
+  width: 60%;
+  .title {
+    font-size: 40px;
+    color: $white-color;
+    margin: 0px;
+    padding: 0px;
+    text-transform: uppercase;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      left: -15px; /* Adjust this value to position the line */
+      top: 0;
+      height: 100%;
+      width: 4px; /* Adjust this value for line thickness */
+      border-radius: 10px;
+      background-color: $accent-color; /* Adjust this value for line color */
+    }
+  }
+  .searchInput {
+    width: 440px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $secondary-color-dark;
+    border-radius: 5px;
+    padding: 0px 10px;
+    input {
+      width: 80%;
+      border: none;
+      padding: 10px;
+      color: $white-color;
+      background-color: transparent;
+    }
+  }
+}
+.alertsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.filterContainer {
+  width: 33%;
+}
+.alertsList {
+  width: 100%;
+  // overflow scroll y
+  overflow-y: auto;
+  height: 700px;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $secondary-color-dark;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: $primary-color-light;
+  }
+}
+
+.notificationTab {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .notificationTab {
+    display: none;
+  }
+}

@@ -1,0 +1,86 @@
+@import '../sass/base.scss';
+.itemContainer {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.stockItemContainer {
+  background-color: $secondary-color-dark;
+  width: 100%;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  .stockItemField {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 0px;
+    padding-left: 35px;
+
+    width: 22%;
+    border-right: 1px solid rgba($color: $white-color, $alpha: 0.1);
+    &:last-child {
+      border-right: none;
+    }
+    .icon {
+      fill: $white-color;
+      margin-right: 25px;
+      width: 22px;
+      path {
+        fill: $white-color;
+      }
+    }
+    .stockItemTitle {
+      margin: 0px;
+      padding: 0px;
+      color: $white-color;
+      font-size: 14px;
+      font-weight: 400;
+      .success {
+        color: $success-color;
+        font-weight: 400;
+      }
+      .danger {
+        color: $danger-color;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.stockItemContainerActive {
+  background-color: $accent-color;
+  .stockItemField {
+    border-right: 1px solid rgba($color: $white-color, $alpha: 0.5);
+    .stockItemTitle {
+      .success {
+        color: $success-color;
+        font-weight: 600;
+      }
+      .danger {
+        color: $danger-color;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.desc {
+  position: relative;
+  z-index: 100;
+  top: -8px;
+  background-color: $primary-color-dark;
+  border-radius: 5px;
+  padding: 10px;
+  padding-top: 20px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  color: $white-color;
+  line-height: 1.8;
+}
