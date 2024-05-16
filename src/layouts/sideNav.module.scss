@@ -278,6 +278,16 @@
   .sideNavContainer {
     width: 20px;
     height: 10 0vh;
+    .logo {
+      width: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      img {
+        width: 90%;
+      }
+    }
     .list {
       .navLink {
         .navTitle {
