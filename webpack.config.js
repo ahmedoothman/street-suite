@@ -1,4 +1,7 @@
 module.exports = {
+  optimization: {
+    treatWarningsAsErrors: false,
+  },
   // ...
   resolve: {
     fallback: {

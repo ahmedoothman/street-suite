@@ -8,7 +8,6 @@ import { ReactComponent as DocumentIcon } from '../assets/icons/document.svg';
 import { ReactComponent as PercentageChange } from '../assets/icons/percentage-change.svg';
 import { ReactComponent as HighRisk } from '../assets/icons/high-risk.svg';
 import { ReactComponent as LowRisk } from '../assets/icons/low-risk.svg';
-import { set } from 'date-fns';
 const StockItem = (props) => {
   const [minimized, setMinimized] = useState(true);
   // state
