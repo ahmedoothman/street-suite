@@ -28,6 +28,7 @@ import styles from './filterComponent.module.scss';
 const SwiperSlideStyles = { height: '30px' };
 
 const FilterComponent = (props) => {
+  const [tickerName, setTickerName] = useState('');
   const [selectedMarketCap, setSelectedMarketCap] = useState('none');
   const [selectedRiskLevel, setSelectedRiskLevel] = useState('none');
   const [selectedStrategy, setSelectedStrategy] = useState(1);
@@ -56,6 +57,7 @@ const FilterComponent = (props) => {
       marketCap: selectedMarketCap,
       riskLevel: selectedRiskLevel,
       industry: IndustryFilter,
+      ticker: tickerName,
       assets,
       strategy,
     };
@@ -74,6 +76,7 @@ const FilterComponent = (props) => {
     setSelectedRiskLevel('none');
     setSelectedStrategy(1);
     setSelectedAsset(1);
+    setTickerName('');
   };
   // state
   return (
@@ -108,7 +111,12 @@ const FilterComponent = (props) => {
         <h3 className={styles.filterOptionsTitle}>Stock</h3>
         <div className={styles.filterTicker}>
           <div className={styles.search}>
-            <input type='text' placeholder='$ TICKER' />
+            <input
+              type='text'
+              placeholder='$ TICKER'
+              value={tickerName}
+              onChange={(e) => setTickerName(e.target.value)}
+            />
             <SearchIcon className={styles.icon} />
           </div>
         </div>

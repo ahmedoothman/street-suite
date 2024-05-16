@@ -158,7 +158,7 @@ const AlertsPage = () => {
       setFilterItems(stockItems);
     } else {
       const filteredStocks = stockItems.filter((stock) => {
-        return stock.name.tolowerCase().includes(searchValue.tolowerCase());
+        return stock.name.toLowerCase().includes(searchValue.toLowerCase());
       });
       setFilterItems(filteredStocks);
     }
@@ -170,6 +170,14 @@ const AlertsPage = () => {
   const filterHandler = (filterObjs) => {
     if (filterObjs.industry.length === 0) {
       setFilterItems(stockItems);
+    }
+    if (filterObjs.ticker !== '') {
+      const filteredStocks = stockItems.filter((stock) => {
+        return stock.name
+          .toLowerCase()
+          .includes(filterObjs.ticker.toLowerCase());
+      });
+      setFilterItems(filteredStocks);
     }
 
     if (filterObjs.industry.length > 0) {
