@@ -84,3 +84,24 @@
   color: $white-color;
   line-height: 1.8;
 }
+
+// media queries
+@media screen and (max-width: 768px) {
+  .stockItemContainer {
+    padding: 5px;
+    .stockItemField {
+      padding-left: 15px;
+      .icon {
+        margin-right: 5px;
+        width: 15px;
+      }
+      .stockItemTitle {
+        font-size: 10px;
+      }
+    }
+  }
+  .desc {
+    padding: 5px;
+    font-size: 12px;
+  }
+}

@@ -275,6 +275,27 @@
   .notificationTab {
     display: flex;
   }
+  .sideNavContainer {
+    width: 20px;
+    height: 10 0vh;
+    .list {
+      .navLink {
+        .navTitle {
+          display: none;
+        }
+      }
+    }
+    .lower {
+      .profile {
+        .profileInfo {
+          display: none;
+        }
+      }
+      .versionInfo {
+        display: none;
+      }
+    }
+  }
 }
 @keyframes growWidth {
   0% {

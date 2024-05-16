@@ -47,12 +47,17 @@ const StockItem = (props) => {
           </p>
         </div>
         <div className={styles.stockItemField}>
-          {props.risk === 'High' ? (
-            <HighRisk className={styles.icon} />
+          {props.risk === 'high' ? (
+            <Fragment>
+              <HighRisk className={styles.icon} />
+              <p className={styles.stockItemTitle}>High Risk</p>
+            </Fragment>
           ) : (
-            <LowRisk className={styles.icon} />
+            <Fragment>
+              <LowRisk className={styles.icon} />
+              <p className={styles.stockItemTitle}>Low Risk</p>
+            </Fragment>
           )}
-          <p className={styles.stockItemTitle}>{props.risk} Risk</p>
         </div>
       </div>
       {!minimized && <div className={styles.desc}>{props.desc}</div>}

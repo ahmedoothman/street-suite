@@ -6,6 +6,11 @@ body {
   font-family: $main-font;
   background-color: $primary-color-light;
 }
+* {
+  font-family: $main-font;
+  margin: 0px;
+  padding: 0px;
+}
 html {
   box-sizing: border-box;
   font-size: 62.5%; // 1rem = 10px, 10px/16px = 62.5%

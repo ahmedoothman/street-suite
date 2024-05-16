@@ -4,8 +4,8 @@
   border: none;
   padding: 20px;
   border-radius: 10px;
-  height: 700px;
-  min-height: fit-content;
+  min-height: 700px;
+  height: fit-content;
   background-color: $primary-color-dark;
   display: flex;
   flex-direction: column;
@@ -188,5 +188,139 @@
     .listOptions {
       padding: 0px 10px;
     }
+  }
+}
+
+.dualDivSpecial {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0px 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  .part {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 5px;
+    .stockOptions {
+      span {
+        cursor: pointer;
+        font-weight: 200;
+      }
+      .active {
+        background-color: $accent-color;
+        color: $white-color;
+        padding: 2px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.applyButton {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: $accent-color;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  color: $white-color;
+  font-family: $main-font;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1024px) {
+  .filterContainer {
+    padding: 10px;
+    width: 60%;
+    .alertTitle {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+  }
+  .appliedContainer {
+    .appliedFilterHead {
+      .appliedTitle {
+        font-size: 12px;
+      }
+      .clearFilter {
+        font-size: 12px;
+      }
+    }
+    .appliedFilter {
+      span {
+        font-size: 10px;
+        min-width: 40px;
+        .icon {
+          width: 6px;
+          height: 6px;
+        }
+      }
+    }
+  }
+  .filterOptions {
+    .filterOptionsTitle {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+  }
+  .filterTicker {
+    .search {
+      input {
+        padding: 3px;
+      }
+    }
+  }
+  .filterOptionsSubTitle {
+    font-size: 10px;
+    margin-bottom: 5px;
+    .arrowIcon {
+      width: 8px;
+      height: 8px;
+    }
+  }
+  .Industry {
+    margin: 20px 0px;
+    .filterOptionsIndustrySplit {
+      .part {
+        .item {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+  .dualDiv {
+    margin-bottom: 10px;
+    .part {
+      .item {
+        font-size: 9px;
+      }
+    }
+  }
+  .dualDivSpecial {
+    margin-bottom: 10px;
+    .part {
+      .stockOptions {
+        span {
+          font-size: 10px;
+        }
+        .active {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .applyButton {
+    font-size: 12px;
+    padding: 5px;
+    margin-top: 10px;
   }
 }

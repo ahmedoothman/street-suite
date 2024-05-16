@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 //
-import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import FormLabel from '@mui/material/FormLabel';
+// mui styles
+import { CustomLabel, BpRadio } from './CheckBoxStyles';
+// swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import './swiper-styles.css';
 //icons
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg';
 import { ReactComponent as Close } from '../assets/icons/close.svg';
@@ -23,66 +25,56 @@ import { ReactComponent as Util } from '../assets/icons/util.svg';
 import { ReactComponent as Finance } from '../assets/icons/finan.svg';
 // styles
 import styles from './filterComponent.module.scss';
-const backgroundColor = '#454545';
-const CustomLabel = styled(Typography)({
-  color: '#fff', // Custom label color
-  fontSize: '1.2rem', // Custom font size
-  fontWeight: '400', // Custom font weight
-});
+const SwiperSlideStyles = { height: '30px' };
 
-const BpIcon = styled('span')(({ theme }) => ({
-  borderRadius: '50%',
-  width: 16,
-  height: 16,
-  boxShadow:
-    theme.palette.mode === 'dark'
-      ? '0 0 0 1px rgb(16 22 26 / 40%)'
-      : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-  backgroundColor: backgroundColor,
-  backgroundImage: 'none',
-  '.Mui-focusVisible &': {
-    outline: '2px auto rgba(19,124,189,.6)',
-    outlineOffset: 2,
-  },
-  'input:hover ~ &': {
-    backgroundColor: backgroundColor,
-  },
-  'input:disabled ~ &': {
-    boxShadow: 'none',
-    background:
-      theme.palette.mode === 'dark'
-        ? 'rgba(57,75,89,.5)'
-        : 'rgba(206,217,224,.5)',
-  },
-}));
+const FilterComponent = (props) => {
+  const [selectedMarketCap, setSelectedMarketCap] = useState('none');
+  const [selectedRiskLevel, setSelectedRiskLevel] = useState('none');
+  const [selectedStrategy, setSelectedStrategy] = useState(1);
+  const [selectedAsset, setSelectedAsset] = useState(1);
+  const [IndustryFilter, setIndustryFilter] = useState([]);
+  const handleMarketCapChange = (event) => {
+    setSelectedMarketCap(event.target.value);
+  };
 
-const BpCheckedIcon = styled(BpIcon)({
-  backgroundColor: backgroundColor,
-  '&::before': {
-    display: 'block',
-    width: 16,
-    height: 16,
-    backgroundImage: 'radial-gradient(#53acff,#53acff 28%,transparent 32%)',
-    content: '""',
-  },
-  'input:hover ~ &': {
-    backgroundColor: backgroundColor,
-  },
-});
+  const handleRiskLevelChange = (event) => {
+    setSelectedRiskLevel(event.target.value);
+  };
 
-// Inspired by blueprintjs
-function BpRadio(props) {
-  return (
-    <Radio
-      disableRipple
-      color='default'
-      checkedIcon={<BpCheckedIcon />}
-      icon={<BpIcon />}
-      {...props}
-    />
-  );
-}
-const FilterComponent = () => {
+  /* ********************************************************** */
+  /* ************** Filter Handler ***************************** */
+  /* ********************************************************** */
+  const filterHandler = () => {
+    // construct the filter object with the selected values
+    // get the assets from the selectedAsset
+    const assets = ['Stocks', 'Options', 'Futures'][selectedAsset];
+    // get the strategy from the selectedStrategy
+    const strategy = ['Big Option Buys', 'Merger Arbitrage', 'Short Reports'][
+      selectedStrategy
+    ];
+    const filter = {
+      marketCap: selectedMarketCap,
+      riskLevel: selectedRiskLevel,
+      industry: IndustryFilter,
+      assets,
+      strategy,
+    };
+    // call the parent filter function
+    console.log(filter);
+    props.filterHandlerFunc(filter);
+  };
+
+  /* ********************************************************** */
+  /* ************** Clear Filter Handler ***************************** */
+  /* ********************************************************** */
+
+  const clearFilterHandler = () => {
+    setIndustryFilter([]);
+    setSelectedMarketCap('none');
+    setSelectedRiskLevel('none');
+    setSelectedStrategy(1);
+    setSelectedAsset(1);
+  };
   // state
   return (
     <div className={styles.filterContainer}>
@@ -90,15 +82,26 @@ const FilterComponent = () => {
       <div className={styles.appliedContainer}>
         <div className={styles.appliedFilterHead}>
           <span className={styles.appliedTitle}>Filters Applied</span>
-          <span className={styles.clearFilter}>Clear All</span>
+          <span className={styles.clearFilter} onClick={clearFilterHandler}>
+            Clear All
+          </span>
         </div>
         <div className={styles.appliedFilter}>
-          <span>
-            Filter 1 <Close className={styles.icon} />
-          </span>
-          <span>
-            Filter 2 <Close className={styles.icon} />
-          </span>
+          {IndustryFilter.map((item, index) => (
+            <div className={styles.appliedItem} key={index}>
+              <span>
+                {item}
+                <Close
+                  className={styles.icon}
+                  onClick={() => {
+                    setIndustryFilter(
+                      IndustryFilter.filter((_, i) => i !== index)
+                    );
+                  }}
+                />
+              </span>
+            </div>
+          ))}
         </div>
       </div>
       <div className={styles.filterOptions}>
@@ -116,45 +119,129 @@ const FilterComponent = () => {
           </div>
           <div className={styles.filterOptionsIndustrySplit}>
             <div className={styles.part}>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Health Care')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Health Care']);
+                }}
+              >
                 <Heart className={styles.icon} />
                 <span>Health Care</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Materials')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Materials']);
+                }}
+              >
                 <Mater className={styles.icon} />
                 <span>Materials</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Energy')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Energy']);
+                }}
+              >
                 <Energy className={styles.icon} />
                 <span>Energy</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Consumer Discretionary')) {
+                    return;
+                  }
+                  setIndustryFilter([
+                    ...IndustryFilter,
+                    'Consumer Discretionary',
+                  ]);
+                }}
+              >
                 <Consum className={styles.icon} />
                 <span>Consumer Discretionary</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Real Estate')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Real Estate']);
+                }}
+              >
                 <RealState className={styles.icon} />
                 <span>Real Estate</span>
               </div>
             </div>
             <div className={styles.part}>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('IT')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'IT']);
+                }}
+              >
                 <IT className={styles.icon} />
                 <span>IT</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Communication')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Communication']);
+                }}
+              >
                 <Comm className={styles.icon} />
                 <span>Communication</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Industrials')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Industrials']);
+                }}
+              >
                 <Indust className={styles.icon} />
                 <span>Industrials</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Utilities')) {
+                    return;
+                  }
+
+                  setIndustryFilter([...IndustryFilter, 'Utilities']);
+                }}
+              >
                 <Util className={styles.icon} />
                 <span>Utilities</span>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => {
+                  if (IndustryFilter.includes('Financials')) {
+                    return;
+                  }
+                  setIndustryFilter([...IndustryFilter, 'Financials']);
+                }}
+              >
                 <Finance className={styles.icon} />
                 <span>Financials</span>
               </div>
@@ -171,8 +258,10 @@ const FilterComponent = () => {
               <FormControl>
                 <RadioGroup
                   aria-labelledby='demo-radio-buttons-group-label'
-                  defaultValue='micro'
-                  name='radio-buttons-group'
+                  defaultValue={selectedMarketCap}
+                  value={selectedMarketCap}
+                  name='marketCap'
+                  onChange={handleMarketCapChange}
                 >
                   <FormControlLabel
                     value='micro'
@@ -202,8 +291,10 @@ const FilterComponent = () => {
               <FormControl>
                 <RadioGroup
                   aria-labelledby='demo-radio-buttons-group-label'
-                  defaultValue='low'
-                  name='radio-buttons-group'
+                  defaultValue={selectedRiskLevel}
+                  value={selectedRiskLevel}
+                  name='riskLevel'
+                  onChange={handleRiskLevelChange}
                 >
                   <FormControlLabel
                     value='low'
@@ -225,18 +316,94 @@ const FilterComponent = () => {
             </div>
           </div>
         </div>
-        <div className={styles.dualDiv}>
+        <div className={styles.dualDivSpecial}>
           <div className={styles.part}>
-            <div className={styles.filterOptionsSubTitle}>Market Cap</div>
-            <div className={styles.stockOptions}></div>
+            <div className={styles.filterOptionsSubTitle}>Strategy</div>
+            <div className={styles.stockOptions}>
+              <Swiper
+                mousewheel
+                centeredSlides={true}
+                direction={'vertical'}
+                spaceBetween={3}
+                slidesPerView={'auto'}
+                initialSlide={selectedStrategy}
+                onSlideChange={(swiper) =>
+                  setSelectedStrategy(swiper.activeIndex)
+                }
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedStrategy === 0 && (
+                    <span className={styles.active}>Big Option Buys</span>
+                  )}
+                  {selectedStrategy !== 0 && (
+                    <span className={styles.notActive}>Big Option Buys</span>
+                  )}
+                </SwiperSlide>
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedStrategy === 1 && (
+                    <span className={styles.active}>Merger Arbitrage</span>
+                  )}
+                  {selectedStrategy !== 1 && (
+                    <span className={styles.notActive}>Merger Arbitrage</span>
+                  )}
+                </SwiperSlide>
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedStrategy === 2 && (
+                    <span className={styles.active}>Short Reports</span>
+                  )}
+                  {selectedStrategy !== 2 && (
+                    <span className={styles.notActive}>Short Reports</span>
+                  )}
+                </SwiperSlide>
+              </Swiper>
+            </div>
           </div>
           <div className={styles.part}>
-            <div className={styles.filterOptionsSubTitle}>Risk Level</div>
-            <div className={styles.stockOptions}></div>
+            <div className={styles.filterOptionsSubTitle}>Assets</div>
+            <div className={styles.stockOptions}>
+              <Swiper
+                mousewheel
+                centeredSlides={true}
+                direction={'vertical'}
+                spaceBetween={3}
+                slidesPerView={'auto'}
+                onSlideChange={(swiper) => setSelectedAsset(swiper.activeIndex)}
+                initialSlide={selectedAsset}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedAsset === 0 && (
+                    <span className={styles.active}>Stocks</span>
+                  )}
+                  {selectedAsset !== 0 && (
+                    <span className={styles.notActive}>Stocks</span>
+                  )}
+                </SwiperSlide>
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedAsset === 1 && (
+                    <span className={styles.active}>Options</span>
+                  )}
+                  {selectedAsset !== 1 && (
+                    <span className={styles.notActive}>Options</span>
+                  )}
+                </SwiperSlide>
+                <SwiperSlide style={SwiperSlideStyles}>
+                  {selectedAsset === 2 && (
+                    <span className={styles.active}>Futures</span>
+                  )}
+                  {selectedAsset !== 2 && (
+                    <span className={styles.notActive}>Futures</span>
+                  )}
+                </SwiperSlide>
+              </Swiper>
+            </div>
           </div>
         </div>
-        <button className={styles.applyButton}>Apply</button>
       </div>
+      <button className={styles.applyButton} onClick={filterHandler}>
+        Apply
+      </button>
     </div>
   );
 };
