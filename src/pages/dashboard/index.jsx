@@ -10,7 +10,7 @@ const DashboardBase = () => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate('/alerts');
-  }, [navigate]);
+  }, []);
   // state
   return (
     <div className={styles.bodyContainer}>
