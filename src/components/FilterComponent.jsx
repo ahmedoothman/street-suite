@@ -60,7 +60,7 @@ const FilterComponent = (props) => {
       strategy,
     };
     // call the parent filter function
-    console.log(filter);
+
     props.filterHandlerFunc(filter);
   };
 
@@ -330,7 +330,6 @@ const FilterComponent = (props) => {
                 onSlideChange={(swiper) =>
                   setSelectedStrategy(swiper.activeIndex)
                 }
-                onSwiper={(swiper) => console.log(swiper)}
               >
                 <SwiperSlide style={SwiperSlideStyles}>
                   {selectedStrategy === 0 && (
@@ -370,7 +369,6 @@ const FilterComponent = (props) => {
                 slidesPerView={'auto'}
                 onSlideChange={(swiper) => setSelectedAsset(swiper.activeIndex)}
                 initialSlide={selectedAsset}
-                onSwiper={(swiper) => console.log(swiper)}
               >
                 <SwiperSlide style={SwiperSlideStyles}>
                   {selectedAsset === 0 && (
